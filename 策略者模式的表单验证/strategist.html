@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>策略者模式表单验证</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
+    <style>
+        #register {
+            width: 400px;
+            margin: 100px auto;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    </style>
+    <script src="strategy.js"></script>
+</head>
+<body>
+<form action="http://baidu.com" id="register" method="post">
+    <div class="form-group">
+        <label for="user">请输入用户名：</label>
+        <input type="text" class="form-control" id="user" name="userName">
+    </div>
+    <div class="form-group">
+        <label for="pwd">请输入密码：</label>
+        <input type="password" class="form-control" id="pwd" name="password">
+    </div>
+    <div class="form-group">
+        <label for="phone">请输入手机号码：</label>
+        <input type="tel" class="form-control" id="phone" name="phoneNumber">
+    </div>
+    <div class="form-group">
+        <label for="email">请输入邮箱：</label>
+        <input type="text" class="form-control" id="email" name="emailAddress">
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+	let register = document.querySelector ('#register')
+
+	var validatorFunc = () => {
+		let validator = new Validator ()
+
+		validator.add (register.userName, [{
+			strategy: 'isNonEmpty',
+			errorMsg: '用户名不能为空'
+		}, {
+			strategy: 'minLength: 6',
+			errorMsg: '用户名长度不能少于6位'
+		}])
+
+		validator.add (register.password, [{
+			strategy: 'isNonEmpty',
+			errorMsg: '密码不能为空'
+		}, {
+			strategy: 'minLength: 6',
+			errorMsg: '密码长度不能少于6位'
+		}])
+
+		/*validator.add (register.password, [{
+			strategy: 'isNonEmpty',
+			errorMsg: '密码不能为空'
+		}, {
+			strategy: 'minLength：6',
+			errorMsg: '密码长度不能少于6位'
+		}])*/
+
+		validator.add (register.phoneNumber, [{
+			strategy: 'isNonEmpty',
+			errorMsg: '手机号码不能为空'
+		}, {
+			strategy: 'isMobile',
+			errorMsg: '手机号码格式不正确'
+		}])
+
+		validator.add (register.emailAddress, [{
+			strategy: 'isNonEmpty',
+			errorMsg: '邮箱地址不能为空'
+		}, {
+			strategy: "isEmail",
+			errorMsg: '邮箱地址格式不正确'
+		}])
+
+		let errorMsg = validator.start ()
+		return errorMsg
+	}
+
+	/*
+        	* 阻止表单提交，要通过阻止默认事件的方式，也可以试一下onsubmit
+        	* 但是return，return false真的没用
+        	* */
+	/*register.addEventListener('submit', (e)=>{
+		let errorMsg = validatorFunc()
+        if(errorMsg){
+
+        	e.preventDefault()
+            alert(errorMsg)
+        }
+    })
+    */
+	register.onsubmit = function (e) {
+		let errorMsg = validatorFunc ()
+		if (errorMsg) {
+			/*
+            * 阻止表单提交，要通过阻止默认事件的方式，也可以试一下onsubmit
+            * 但是return，return false真的没用
+            * */
+			e.preventDefault ()
+			alert (errorMsg)
+		}
+	}
+</script>
+</body>
+</html>
