@@ -1,0 +1,57 @@
+html, body{
+    width: 100%;
+}
+table{
+    width: 50%;
+    margin: 30px auto;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    position: relative;
+}
+th{
+    background-color: cornflowerblue;
+    height: 2.5em;
+}
+.td-one{
+    width: 10%;
+}
+.td-two{
+    width: 20%;
+}
+.td-three{
+    width: 20%;
+}
+.td-four{
+    width: 20%;
+}
+.td-five{
+    width: 20%;
+}
+.td-six{
+    width: 10%;
+}
+
+td{
+    height: 2em;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+.num{
+    display: inline-block;
+    width: 3em;
+}
+button{
+    height: 2em;
+    width: 2em;
+    background-color: #ddc594;
+    border-radius: 4px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+.del{
+    width: 3em;
+}
+.price{
+    text-align: left;
+}
