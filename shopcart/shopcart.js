@@ -2,9 +2,9 @@ window.onload = function () {
 	function Cart () {
 		this.allBtn = document.querySelectorAll ('.btn')
 		this.number = document.querySelector ('.number')
-		this.total = document.querySelector ('.total')
+		this.price = document.querySelector('.price')
 		this.expensive = document.querySelector ('.expensive')
-		this.totalNumber = 0
+		this.total = 0
 	}
 
 //	小计
@@ -44,8 +44,8 @@ window.onload = function () {
 		var unit = btn.parentNode.parentNode.parentNode.querySelector ('.unit')
 		var subTotal = btn.parentNode.parentNode.parentNode.querySelector ('.sub-total')
 		subTotal.textContent = this.getSubTotal (num.textContent, unit.textContent)
-		this.number.textContent = this.getNumber()
-		this.total.textContent = this.getTotal ()
+		this.number.textContent = this.total
+		this.price.textContent = this.getTotal ()
 		this.expensive.textContent = this.findMax ()
 	}
 	
@@ -55,9 +55,10 @@ window.onload = function () {
 		var number = 0
 		for (let i = 0; i < allNum.length; i ++) {
 			if (allNum[i] > 0) {
-				number += allNum[i]
+				number += parseInt(allNum[i].value)
 			}
 		}
+		return number
 	}
 	//	点击- 号
 	Cart.prototype.minus = function (btn) {
@@ -69,8 +70,9 @@ window.onload = function () {
 			var unit = btn.parentNode.parentNode.parentNode.querySelector ('.unit')
 			var subTotal = btn.parentNode.parentNode.parentNode.querySelector ('.sub-total')
 			subTotal.textContent = this.getSubTotal (num.textContent, unit.textContent)
-			this.number.textContent = this.getNumber()
-			this.total.textContent = this.getTotal ()
+			this.number.textContent = this.total
+			
+			this.price.textContent = this.getTotal ()
 			this.expensive.textContent = this.findMax ()
 		}
 	}
@@ -80,8 +82,9 @@ window.onload = function () {
 		var del = btn.parentNode.parentNode
 		var parent = del.parentNode
 		parent.removeChild(del)
-		this.number.textContent = this.getNumber()
-		this.total.textContent = this.getTotal ()
+		this.number.textContent = this.total
+		
+		this.price.textContent = this.getTotal ()
 		this.expensive.textContent = this.findMax ()
 		this.sort()
 	}
