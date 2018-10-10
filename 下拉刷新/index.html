@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>下拉刷新</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      width: 100%;
+    }
+
+    ul{
+      list-style-type: none;
+    }
+    li{
+      padding: 20px;
+      border-bottom: 1px solid #eff;
+      background-color: #eee;
+    }
+    .refreshText{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      line-height: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="refreshText"></p>
+    <ul id="refreshContainer">
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111d</li>
+      <li>111dd</li>
+    </ul>
+  </main>
+  <script>
+    (function(window){
+      //操作下拉刷新的元素
+      var el = document.getElementById('refreshContainer')
+      //下拉刷新操作是显示的文本
+      var text  = document.querySelector('.refreshText')
+      //下拉的开始位置坐标
+      var startPos = 0
+      //下拉的高度
+      var transitionHeight = 0
+
+      el.addEventListener('touchstart', function(e){
+        // console.log(e)
+        // console.log(e.touches)
+        startPos = e.touches[0].pageY
+        el.style.position = 'relative'
+        el.style.transition = 'transform 0s'
+      }, false)
+
+      el.addEventListener('touchmove', function(e){
+        transitionHeight = e.touches[0].pageY - startPos
+
+        if (transitionHeight > 0 && transitionHeight < 60){
+          text.innerHTML = '下拉刷新'
+          el.style.transform = 'translateY(' + transitionHeight + 'px)'
+          if (transitionHeight>55){
+            text.textContent = '释放更新'
+          }
+        }
+      }, false)
+
+      el.addEventListener('touchend', (e)=>{
+        el.style.transition = 'transform 0.5s ease 1s'
+        el.transform = 'translateY(0px)'
+        text.innerHTML = '更新中······'
+
+      //  写业务逻辑
+      }, false)
+
+    })(window)
+  </script>
+</body>
+</html>
